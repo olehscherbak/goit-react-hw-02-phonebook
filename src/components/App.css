@@ -1,0 +1,22 @@
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  display: block;
+  margin-bottom: 10px;
+}
+
+button {
+  width: 20%;
+}
+
+.phoneBook {
+  padding-left: 24px;
+}
