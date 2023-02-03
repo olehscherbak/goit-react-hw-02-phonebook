@@ -2,6 +2,8 @@ import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import { GiRotaryPhone } from 'react-icons/gi';
 import './App.css';
+import ContactForm from './ContactForm/ContactForm';
+import Filter from './Filter/Filter';
 
 class App extends Component {
   state = {
@@ -16,18 +18,18 @@ class App extends Component {
     number: '',
   };
 
-  handleSubmit = evt => {
-    evt.preventDefault();
+  changeFilter = filter => {
+    this.setState({ filter });
+  };
+
+  addContact = (name, number) => {
     const newContact = {
       id: nanoid(),
-      name: evt.target.name.value,
-      number: evt.target.number.value,
+      name,
+      number,
     };
-
     this.setState(({ contacts }) => ({
       contacts: [newContact, ...contacts],
-      name: '',
-      number: '',
     }));
   };
 
@@ -52,39 +54,12 @@ class App extends Component {
 
     return (
       <div className="phoneBook">
-        <h2>Phonebook</h2>
-        <form onSubmit={this.handleSubmit} className="form">
-          <label>
-            Name
-            <input
-              type="text"
-              name="name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-              onChange={this.handleChange}
-              value={this.state.name}
-            />
-          </label>
+        <h1>Phonebook</h1>
 
-          <label>
-            Number
-            <input
-              type="tel"
-              name="number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-              onChange={this.handleChange}
-              value={this.state.number}
-            />
-          </label>
-
-          <button type="submit">Add contact</button>
-        </form>
+        <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
-        <input type="text" name="filter" onChange={this.handleChange} />
-
+        {/* <input type="text" name="filter" onChange={this.handleChange} /> */}
+        <Filter onChange={this.changeFilter} />
         <ul>
           {filteredContacts.map(({ id, name, number }) => {
             return (
