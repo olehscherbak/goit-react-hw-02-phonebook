@@ -28,9 +28,12 @@ class App extends Component {
       name,
       number,
     };
-    this.setState(({ contacts }) => ({
-      contacts: [newContact, ...contacts],
-    }));
+
+    this.state.contacts.some(contact => contact.name === name)
+      ? alert(`${name} is already in contacts`)
+      : this.setState(({ contacts }) => ({
+          contacts: [newContact, ...contacts],
+        }));
   };
 
   handleChange = evt => {
