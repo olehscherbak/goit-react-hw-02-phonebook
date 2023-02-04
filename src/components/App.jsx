@@ -1,14 +1,32 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
-import { GiRotaryPhone } from 'react-icons/gi';
-import './App.css';
+
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
+import ContactList from './ContactList/ContactList';
 
 class App extends Component {
   state = {
     contacts: [
+      {
+        id: 'i_S',
+        name: 'Oleh Scherbak',
+        number: '38067-247-62-45',
+      },
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-11', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-12', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-13', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-14', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-15', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-16', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-17', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-18', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-119', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-120', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-21', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-221', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-231', name: 'Rosie Simpson', number: '459-12-56' },
       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
@@ -37,11 +55,17 @@ class App extends Component {
     this.setState({ [evt.target.name]: evt.target.value });
   };
 
-  handleClick = (evt, id) => {
+  // handleClick = (evt, id) => {
+  //   const { contacts } = this.state;
+  //   const updatedContacts = contacts.filter(
+  //     contact => contact.id !== evt.target.value
+  //   );
+  //   this.setState({ contacts: updatedContacts });
+  // };
+
+  deleteContact = value => {
     const { contacts } = this.state;
-    const updatedContacts = contacts.filter(
-      contact => contact.id !== evt.target.value
-    );
+    const updatedContacts = contacts.filter(contact => contact.id !== value);
     this.setState({ contacts: updatedContacts });
   };
 
@@ -55,23 +79,13 @@ class App extends Component {
     return (
       <div className="phoneBook">
         <h1>Phonebook</h1>
-
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
-        {/* <input type="text" name="filter" onChange={this.handleChange} /> */}
         <Filter onChange={this.changeFilter} />
-        <ul>
-          {filteredContacts.map(({ id, name, number }) => {
-            return (
-              <li key={id}>
-                <GiRotaryPhone /> {name} {number}
-                <button type="button" value={id} onClick={this.handleClick}>
-                  Delete
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        <ContactList
+          contactArray={filteredContacts}
+          deleteContact={this.deleteContact}
+        />
       </div>
     );
   }
